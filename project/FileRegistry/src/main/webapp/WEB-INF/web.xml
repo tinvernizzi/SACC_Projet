@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+  <servlet>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>com.example.appengine.helloworld.HelloServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>articles</servlet-name>
+    <servlet-class>com.example.appengine.articles.Articles</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>injecteur</servlet-name>
+    <servlet-class>com.example.appengine.injecteurcharge.InjecteurCharge</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>datastore</servlet-name>
+    <servlet-class>com.example.appengine.datastore.DataStoreServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>cloudstore</servlet-name>
+    <servlet-class>com.example.appengine.cloudstore.CloudStoreServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>hello</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>articles</servlet-name>
+    <url-pattern>/articles</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>injecteur</servlet-name>
+    <url-pattern>/injecteur</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>datastore</servlet-name>
+    <url-pattern>/datastore</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>cloudstore</servlet-name>
+    <url-pattern>/cloudstore</url-pattern>
+  </servlet-mapping>
+</web-app>
