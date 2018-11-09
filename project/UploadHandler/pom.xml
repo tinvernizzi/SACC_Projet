@@ -12,4 +12,12 @@
     <artifactId>upload_handler</artifactId>
 
 
+    <dependencies>
+    <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>google-cloud-storage</artifactId>
+        <version>1.48.0</version>
+    </dependency>
+    </dependencies>
+
 </project>

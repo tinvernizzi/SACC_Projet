@@ -11,5 +11,13 @@
 
     <artifactId>file_registry</artifactId>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-datastore -->
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-datastore</artifactId>
+            <version>1.50.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
