@@ -38,6 +38,7 @@ public class FileInformationServlet extends HttpServlet {
         req.getParameter("fileUrl"), Integer.parseInt(req.getParameter("userId")),
         LocalDateTime.now());
     String fileId = insertFileInformation(fileInformation);
+    resp.addHeader("Content-Type", "application/json");
     PrintWriter out = resp.getWriter();
     out.println("{\"fileId\": \"" + fileId + "\"" + "}");
   }
@@ -46,6 +47,7 @@ public class FileInformationServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     Key key = Key.fromUrlSafe(req.getParameter("fileId"));
     Entity entityFileInfo = datastore.get(key);
+    resp.addHeader("Content-Type", "application/json");
     PrintWriter out = resp.getWriter();
     out.println("{\"fileUrl\": \"" + entityFileInfo.getString("fileUrl") + "\"" + "}");
   }
