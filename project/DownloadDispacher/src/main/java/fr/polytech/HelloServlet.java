@@ -15,7 +15,7 @@
  */
 
 
-package fr.polytech.helloworld;
+package fr.polytech;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
