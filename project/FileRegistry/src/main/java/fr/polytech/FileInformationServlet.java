@@ -45,22 +45,22 @@ public class FileInformationServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     Key key = Key.fromUrlSafe(req.getParameter("fileId"));
-    Entity task = datastore.get(key);
+    Entity entityFileInfo = datastore.get(key);
     PrintWriter out = resp.getWriter();
-    out.println("{\"fileUrl\": \"" + task.getString("fileUrl") + "\"" + "}");
+    out.println("{\"fileUrl\": \"" + entityFileInfo.getString("fileUrl") + "\"" + "}");
   }
 
   private String insertFileInformation(FileInformation fileInformation) {
     KeyFactory keyFactory = datastore.newKeyFactory().setKind("fileInformation");
 
     Key key = keyFactory.newKey(fileInformation.getFileName());
-    Entity task = Entity.newBuilder(key)
+    Entity entityFileInfo = Entity.newBuilder(key)
         .set("filename", fileInformation.getFileName())
         .set("fileUrl", fileInformation.getFileUrl())
         .set("userId", fileInformation.getUserId())
         .set("date", fileInformation.getDateTime().toString())
         .build();
-    datastore.put(task);
+    datastore.put(entityFileInfo);
 
     return key.toUrlSafe();
   }
