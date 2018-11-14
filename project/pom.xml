@@ -15,6 +15,7 @@
         <module>FileRegistry</module>
         <module>UserRegistry</module>
         <module>UploadHandler</module>
+        <module>Mailer</module>
     </modules>
 
     <properties>
