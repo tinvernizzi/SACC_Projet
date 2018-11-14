@@ -45,6 +45,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONObject;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -130,7 +131,8 @@ public class UploaderServlet extends HttpServlet {
     }
     in.close();
 
-    return response.toString();
+    JSONObject jsonResponse = new JSONObject(response.toString());
+    return jsonResponse.getString("fileId");
   }
 }
 // [END example]
