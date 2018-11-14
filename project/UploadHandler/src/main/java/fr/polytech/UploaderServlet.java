@@ -98,7 +98,7 @@ public class UploaderServlet extends HttpServlet {
 
   private String addFileInformation(String fileName, String fileUrl, int userId)
       throws IOException {
-    String url = "https://selfsolve.apple.com/wcResults.do";
+    String url = "";
     URL obj = new URL(url);
     HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
