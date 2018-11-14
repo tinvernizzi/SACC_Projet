@@ -37,7 +37,7 @@ public class FileInformationServlet extends HttpServlet {
     FileInformation fileInformation = new FileInformation(req.getParameter("filename"),
         req.getParameter("fileUrl"), Integer.parseInt(req.getParameter("userId")),
         LocalDateTime.now());
-    String fileId = insertFileInformation(fileInformation);
+    long fileId = insertFileInformation(fileInformation);
     resp.addHeader("Content-Type", "application/json");
     PrintWriter out = resp.getWriter();
     out.println("{\"fileId\": \"" + fileId + "\"" + "}");
@@ -45,17 +45,18 @@ public class FileInformationServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    Key key = Key.fromUrlSafe(req.getParameter("fileId"));
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("fileInformation");
+    Key key = keyFactory.newKey(Long.parseLong(req.getParameter("fileId")));
     Entity entityFileInfo = datastore.get(key);
     resp.addHeader("Content-Type", "application/json");
     PrintWriter out = resp.getWriter();
     out.println("{\"fileUrl\": \"" + entityFileInfo.getString("fileUrl") + "\"" + "}");
   }
 
-  private String insertFileInformation(FileInformation fileInformation) {
+  private long insertFileInformation(FileInformation fileInformation) {
     KeyFactory keyFactory = datastore.newKeyFactory().setKind("fileInformation");
 
-    Key key = keyFactory.newKey(fileInformation.getFileName());
+    Key key = datastore.allocateId(keyFactory.newKey());
     Entity entityFileInfo = Entity.newBuilder(key)
         .set("filename", fileInformation.getFileName())
         .set("fileUrl", fileInformation.getFileUrl())
@@ -64,7 +65,7 @@ public class FileInformationServlet extends HttpServlet {
         .build();
     datastore.put(entityFileInfo);
 
-    return key.toUrlSafe();
+    return key.getId();
   }
 
 

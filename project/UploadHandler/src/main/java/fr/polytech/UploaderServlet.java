@@ -25,55 +25,59 @@ import com.google.cloud.storage.Acl.User;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.http.Part;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.json.JSONObject;
 
 // [START example]
 @SuppressWarnings("serial")
 @MultipartConfig
 public class UploaderServlet extends HttpServlet {
+  private static ResourceBundle bundle = ResourceBundle.getBundle("configUploadHandler");
 
   private Storage storage = StorageOptions.getDefaultInstance().getService();
-  private String bucketName = "file_bucket";
+  private String bucketName = bundle.getString("fileBucket.name");
 
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {
     PrintWriter out = resp.getWriter();
-    if(!isAuthorizationToUpload(Integer.parseInt(req.getParameter("userId")))){
-      out.println("You are not authorzed to upload more.");
+    if (!isAuthorizedToUpload(Integer.parseInt(req.getParameter("userId")))) {
+      out.println("You are not authorized to upload more.");
       return;
     }
     Part filePart = req.getPart("file");
     String link = uploadFile(filePart, bucketName);
-    resp.setContentType("application/json");
-    out.println(addFileInformation(filePart.getSubmittedFileName(), link, Integer.parseInt(req.getParameter("userId"))));
 
-    //update score user
+    String fileId = addFileInformation(filePart.getSubmittedFileName(), link,
+        Integer.parseInt(req.getParameter("userId")));
+
+    // modify user's score
+
+    // send mail to user with fileId
+
+    out.println("upload ok !");
   }
 
-  private boolean isAuthorizationToUpload(int userId) {
+  private boolean isAuthorizedToUpload(int userId) {
     return true;
   }
 
@@ -98,7 +102,7 @@ public class UploaderServlet extends HttpServlet {
 
   private String addFileInformation(String fileName, String fileUrl, int userId)
       throws IOException {
-    String url = "";
+    String url = bundle.getString("fileRegistry.url");
     URL obj = new URL(url);
     HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -107,7 +111,7 @@ public class UploaderServlet extends HttpServlet {
     con.setRequestProperty("User-Agent", USER_AGENT);
     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-    String urlParameters = "filename=" + fileName +"&userId=" + userId + "&fileUrl=" + fileUrl;
+    String urlParameters = "filename=" + fileName + "&userId=" + userId + "&fileUrl=" + fileUrl;
 
     // Send post request
     con.setDoOutput(true);
@@ -115,8 +119,6 @@ public class UploaderServlet extends HttpServlet {
     wr.writeBytes(urlParameters);
     wr.flush();
     wr.close();
-
-    int responseCode = con.getResponseCode();
 
     BufferedReader in = new BufferedReader(
         new InputStreamReader(con.getInputStream()));
