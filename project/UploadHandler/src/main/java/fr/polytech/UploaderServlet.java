@@ -30,12 +30,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ProtocolException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -69,7 +68,8 @@ public class UploaderServlet extends HttpServlet {
       return;
     }
     Part filePart = req.getPart("file");
-    String link = uploadFile(filePart, bucketName);
+    // String link = uploadFile(filePart, bucketName);
+    String link = "test.com"; //test
 
     String fileId = addFileInformation(filePart.getSubmittedFileName(), link,
         userId);
@@ -77,9 +77,9 @@ public class UploaderServlet extends HttpServlet {
     // modify user's score
 
     // send mail to user with fileId
-    sendMail(getUserEmail(userId), fileId);
+    // sendMail(getUserEmail(userId), fileId);
 
-    out.println("upload ok !");
+    out.println("upload ok ! " + fileId);
   }
 
   private boolean isAuthorizedToUpload(int userId) {
@@ -129,9 +129,9 @@ public class UploaderServlet extends HttpServlet {
 
   private String httpPost(String url, String parameters) throws IOException {
     URL obj = new URL(url);
-    HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-    //add reuqest header
+    //add request header
     con.setRequestMethod("POST");
     con.setRequestProperty("User-Agent", USER_AGENT);
     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");

@@ -59,12 +59,6 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <!-- Parent POM defines ${appengine.sdk.version} (updates frequently). -->
-            <plugin>
-                <groupId>com.google.appengine</groupId>
-                <artifactId>appengine-maven-plugin</artifactId>
-                <version>${appengine.sdk.version}</version>
-            </plugin>
         </plugins>
     </build>
 

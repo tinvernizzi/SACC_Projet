@@ -21,4 +21,19 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.sdk.version}</version>
+                <configuration>
+                    <enableJarClasses>false</enableJarClasses>
+                    <port>8180</port>
+                    <address>0.0.0.0</address>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
