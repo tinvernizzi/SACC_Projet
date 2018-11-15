@@ -30,6 +30,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +52,7 @@ import org.json.JSONObject;
 @SuppressWarnings("serial")
 @MultipartConfig
 public class UploaderServlet extends HttpServlet {
+
   private static ResourceBundle bundle = ResourceBundle.getBundle("configUploadHandler");
 
   private Storage storage = StorageOptions.getDefaultInstance().getService();
@@ -60,8 +62,9 @@ public class UploaderServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {
+    int userId = Integer.parseInt(req.getParameter("userId"));
     PrintWriter out = resp.getWriter();
-    if (!isAuthorizedToUpload(Integer.parseInt(req.getParameter("userId")))) {
+    if (!isAuthorizedToUpload(userId)) {
       out.println("You are not authorized to upload more.");
       return;
     }
@@ -69,17 +72,22 @@ public class UploaderServlet extends HttpServlet {
     String link = uploadFile(filePart, bucketName);
 
     String fileId = addFileInformation(filePart.getSubmittedFileName(), link,
-        Integer.parseInt(req.getParameter("userId")));
+        userId);
 
     // modify user's score
 
     // send mail to user with fileId
+    sendMail(getUserEmail(userId), fileId);
 
     out.println("upload ok !");
   }
 
   private boolean isAuthorizedToUpload(int userId) {
     return true;
+  }
+
+  private String getUserEmail(int userId) {
+    return "";
   }
 
   private String uploadFile(Part filePart, final String bucketName) throws IOException {
@@ -104,6 +112,22 @@ public class UploaderServlet extends HttpServlet {
   private String addFileInformation(String fileName, String fileUrl, int userId)
       throws IOException {
     String url = bundle.getString("fileRegistry.url");
+    String urlParameters = "filename=" + fileName + "&userId=" + userId + "&fileUrl=" + fileUrl;
+    String response = httpPost(url, urlParameters);
+
+    JSONObject jsonResponse = new JSONObject(response.toString());
+    return jsonResponse.getString("fileId");
+  }
+
+  private void sendMail(String address, String fileId) throws IOException {
+    String subject = "File uploaded";
+    String content = "Your file has been uploaded. the fileId is: " + fileId;
+    String url = bundle.getString("mailer.url");
+    String urlParameters = "address=" + address + "&subject=" + subject + "&content=" + content;
+    httpPost(url, urlParameters);
+  }
+
+  private String httpPost(String url, String parameters) throws IOException {
     URL obj = new URL(url);
     HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -112,7 +136,7 @@ public class UploaderServlet extends HttpServlet {
     con.setRequestProperty("User-Agent", USER_AGENT);
     con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-    String urlParameters = "filename=" + fileName + "&userId=" + userId + "&fileUrl=" + fileUrl;
+    String urlParameters = parameters;
 
     // Send post request
     con.setDoOutput(true);
@@ -131,8 +155,7 @@ public class UploaderServlet extends HttpServlet {
     }
     in.close();
 
-    JSONObject jsonResponse = new JSONObject(response.toString());
-    return jsonResponse.getString("fileId");
+    return response.toString();
   }
 }
 // [END example]
