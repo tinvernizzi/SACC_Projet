@@ -5,15 +5,15 @@ import java.io.Serializable;
 
 public class DownloadRequest implements Serializable {
 
-    private int userId;
+    private long userId;
     private String fileId;
 
-    public DownloadRequest(int userId, String fileId){
+    public DownloadRequest(long userId, String fileId){
         this.userId = userId;
         this.fileId = fileId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 

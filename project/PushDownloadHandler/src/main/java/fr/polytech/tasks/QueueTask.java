@@ -29,6 +29,8 @@ public class QueueTask extends HttpServlet {
 
   private static final String URL_MAIL = bundle.getString("mailer.url");
 
+  private static final String URL_USER = bundle.getString("userRegistry.url");
+
   private List<String> articles = new ArrayList<>();
 
   @Override
@@ -51,20 +53,50 @@ public class QueueTask extends HttpServlet {
   }
 
   private void processRequest(DownloadRequest request){
-    if(true) {
-      //Get from file registry
-      String link;
-      try {
+    try {
+      JsonObject user = getUserFromGET(request.getUserId());
+
+      if(user.get("canOperate").getAsBoolean()) {
+        //Get from file registry
+        String link;
+
         link = sendGET(request.getFileId());
 
         articles.add(link);
 
-        sendPOST("dallanoraenzo@gmail.com", link);
-      } catch (IOException e) {
-        e.printStackTrace();
+        sendPOST(user.get("userEmailAdress").getAsString(), link);
       }
-
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+  }
+
+  private JsonObject getUserFromGET(long userId) throws IOException {
+    URL obj = new URL(URL_USER + userId);
+    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    con.setRequestMethod("GET");
+    con.setRequestProperty("User-Agent", USER_AGENT);
+    int responseCode = con.getResponseCode();
+
+    if (responseCode == HttpURLConnection.HTTP_OK) { // success
+      BufferedReader in = new BufferedReader(new InputStreamReader(
+              con.getInputStream()));
+      String inputLine;
+      StringBuilder response = new StringBuilder();
+
+      while ((inputLine = in.readLine()) != null) {
+        response.append(inputLine);
+      }
+      in.close();
+
+      System.out.println(response.toString());
+
+      return (JsonObject) new JsonParser().parse(response.toString());
+    } else {
+      System.out.println("GET request not worked");
+    }
+
+    return new JsonObject();
   }
 
   private String sendGET(String fileId) throws IOException {
