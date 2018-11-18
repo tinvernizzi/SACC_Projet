@@ -3,15 +3,10 @@
   xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
   version="2.5">
-  <servlet>
-    <servlet-name>hello</servlet-name>
-    <servlet-class>fr.polytech.HelloServlet</servlet-class>
-  </servlet>
-
   <!--Servlet for push queue -->
   <servlet>
     <servlet-name>pull</servlet-name>
-    <servlet-class>fr.polytech.HelloServlet</servlet-class>
+    <servlet-class>fr.polytech.PullServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>pull</servlet-name>
@@ -20,15 +15,11 @@
 
   <servlet>
     <servlet-name>worker</servlet-name>
-    <servlet-class>fr.polytech.HelloServlet</servlet-class>
+    <servlet-class>fr.polytech.tasks.QueueTask</servlet-class>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>worker</servlet-name>
     <url-pattern>/worker/</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>hello</servlet-name>
-    <url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,5 +1,9 @@
 package fr.polytech.tasks;
 
+import com.google.appengine.api.ThreadManager;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskHandle;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.google.appengine.repackaged.com.google.gson.JsonObject;
 import com.google.appengine.repackaged.com.google.gson.JsonParser;
@@ -18,18 +22,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 
 public class QueueTask extends HttpServlet {
 
   private static final String USER_AGENT = "Mozilla/5.0";
-  private static ResourceBundle bundle = ResourceBundle.getBundle("configPushHandler");
+  private static ResourceBundle bundle = ResourceBundle.getBundle("configPullHandler");
 
   private static final String URL_FILE = bundle.getString("fileRegistry.url");
 
   private static final String URL_MAIL = bundle.getString("mailer.url");
 
   private List<String> articles = new ArrayList<>();
+
+  public QueueTask(){
+    ThreadManager.createBackgroundThread(new TriggerProcess(this)).start();
+  }
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -39,32 +48,6 @@ public class QueueTask extends HttpServlet {
     resp.setCharacterEncoding("UTF-8");
     resp.getWriter().write(json);
 
-  }
-
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    DownloadRequest downloadRequest = new Gson().fromJson(request.getReader(), DownloadRequest.class);
-
-    processRequest(downloadRequest);
-  }
-
-  private void processRequest(DownloadRequest request){
-    if(true) {
-      //Get from file registry
-      String link;
-      try {
-        link = sendGET(request.getFileId());
-
-        articles.add(link);
-
-        sendPOST("dallanoraenzo@gmail.com", link);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-    }
   }
 
   private String sendGET(String fileId) throws IOException {
@@ -113,5 +96,44 @@ public class QueueTask extends HttpServlet {
     // For POST only - END
 
     con.getResponseCode();
+  }
+
+  private void processRequest(DownloadRequest request){
+    if(true) {
+      //Get from file registry
+      String link;
+      try {
+        link = sendGET(request.getFileId());
+
+        articles.add(link);
+
+        sendPOST("dallanoraenzo@gmail.com", link);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+    }
+  }
+
+  public void leaseTasks() {
+    Queue queue = QueueFactory.getQueue("queue-pull");
+
+    List<TaskHandle> tasks = queue.leaseTasks(1, TimeUnit.SECONDS, 1);
+
+    processTasks(tasks, queue);
+  }
+
+  private void processTasks(List<TaskHandle> tasks, Queue queue) {
+    String payload;
+
+    for (TaskHandle task : tasks) {
+      payload = new String(task.getPayload());
+
+      DownloadRequest downloadRequest = new Gson().fromJson(payload, DownloadRequest.class);
+
+      this.processRequest(downloadRequest);
+
+      queue.deleteTask(task);
+    }
   }
 }
