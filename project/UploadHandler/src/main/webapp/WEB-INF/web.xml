@@ -7,8 +7,16 @@
     <servlet-name>uploadHandlerServlet</servlet-name>
     <servlet-class>fr.polytech.UploaderServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>fr.polytech.HelloServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>uploadHandlerServlet</servlet-name>
+    <url-pattern>/service</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>hello</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>
