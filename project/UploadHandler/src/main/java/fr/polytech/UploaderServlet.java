@@ -17,6 +17,7 @@
 
 package fr.polytech;
 
+import static fr.polytech.RequestHttp.httpPost;
 import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 import com.google.cloud.storage.Acl;
@@ -138,37 +139,6 @@ public class UploaderServlet extends HttpServlet {
     String url = bundle.getString("mailer.url");
     String urlParameters = "address=" + address + "&subject=" + subject + "&content=" + content;
     httpPost(url, urlParameters);
-  }
-
-  private String httpPost(String url, String parameters) throws IOException {
-    URL obj = new URL(url);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-    //add request header
-    con.setRequestMethod("POST");
-    con.setRequestProperty("User-Agent", USER_AGENT);
-    con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-    String urlParameters = parameters;
-
-    // Send post request
-    con.setDoOutput(true);
-    DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-    wr.writeBytes(urlParameters);
-    wr.flush();
-    wr.close();
-
-    BufferedReader in = new BufferedReader(
-        new InputStreamReader(con.getInputStream()));
-    String inputLine;
-    StringBuffer response = new StringBuffer();
-
-    while ((inputLine = in.readLine()) != null) {
-      response.append(inputLine);
-    }
-    in.close();
-
-    return response.toString();
   }
 
   @Override
