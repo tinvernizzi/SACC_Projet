@@ -26,7 +26,9 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.joda.time.LocalDateTime;
+import org.joda.time.Minutes;
 
 public class UserInformationServlet extends HttpServlet {
 
@@ -49,8 +51,14 @@ public class UserInformationServlet extends HttpServlet {
         Entity entityFileInfo = datastore.get(key);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
-        out.println("{\"userEmailAdress\" : \"" + entityFileInfo.getString("userEmailAdress") + "\""
-                + ", \"canOperate\" : true}");
+        out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
+                + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
+                + entityFileInfo.getString("userScore") + ", \"canOperate\" : "
+                + canOperate(entityFileInfo.getString("userId"),
+                        Integer.parseInt(entityFileInfo.getString("userScore")),
+                        Integer.parseInt(entityFileInfo.getString("currentDownloads")),
+                        entityFileInfo.getString("timeLastDownload"))
+                + "}");
     }
 
     private long insertUserInformation(UserInformation UserInformation) {
@@ -63,5 +71,34 @@ public class UserInformationServlet extends HttpServlet {
         datastore.put(entityFileInfo);
 
         return key.getId();
+    }
+
+    private boolean canOperate(String userId, int userScore, int currentDownloads, String timeLastDownloadString) {
+        LocalDateTime timeLastDownload = new LocalDateTime(timeLastDownloadString);
+
+        KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
+        Key key = keyFactory.newKey(Long.parseLong(userId));
+
+        int minutes = Minutes.minutesBetween(timeLastDownload, LocalDateTime.now()).getMinutes();
+
+        if (minutes >= 1) {
+            // reset timer
+        }
+        if ((userScore) > 201) {
+            if ((currentDownloads) >= 4) {
+                return false;
+            }
+            return true;
+        }
+        if (userScore > 100) {
+            if (currentDownloads >= 2) {
+                return false;
+            }
+            return true;
+        }
+        if (currentDownloads > 1) {
+            return false;
+        }
+        return true;
     }
 }

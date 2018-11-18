@@ -36,7 +36,7 @@ public class InitUserDbServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter out = resp.getWriter();
 
-        UserInformation userInformation = new UserInformation("Tanguy Invernizzi", "ti@unice.fr", 0);
+        UserInformation userInformation = new UserInformation("Tanguy", "t@unice.fr", 0);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Mec Hyper Cool", "mhc@gmail.fr", 20);

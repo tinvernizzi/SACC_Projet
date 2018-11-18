@@ -23,11 +23,15 @@ public class UserInformation {
     private String userName;
     private String userEmailAdress;
     private int userScore;
+    private LocalDateTime lastDownloadTime;
+    private int currentDownloads;
 
     public UserInformation(String userName, String userEmailAdress, int userScore) {
         this.userName = userName;
         this.userEmailAdress = userEmailAdress;
         this.userScore = userScore;
+        this.lastDownloadTime = LocalDateTime.now();
+        this.currentDownloads = 0;
     }
 
     public String getUserName() {
@@ -52,5 +56,21 @@ public class UserInformation {
 
     public void setUserScore(int userScore) {
         this.userScore = userScore;
+    }
+
+    public LocalDateTime getLastDownloadTime() {
+        return this.lastDownloadTime;
+    }
+
+    public void setLastDownloadTime(LocalDateTime lastDownloadTime) {
+        this.lastDownloadTime = lastDownloadTime;
+    }
+
+    public int getCurrentDownloads() {
+        return this.currentDownloads;
+    }
+
+    public void setCurrentDownloads(int currentDownloads) {
+        this.currentDownloads = currentDownloads;
     }
 }
