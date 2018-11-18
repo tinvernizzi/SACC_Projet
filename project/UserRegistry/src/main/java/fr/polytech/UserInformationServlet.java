@@ -55,9 +55,9 @@ public class UserInformationServlet extends HttpServlet {
                 + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
                 + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
                 + canOperate(entityFileInfo.getString("userId"),
-                        Integer.parseInt(entityFileInfo.getString("userScore")),
-                        Integer.parseInt(entityFileInfo.getString("currentDownloads")),
-                        entityFileInfo.getString("timeLastDownload"))
+                        entityFileInfo.getLong("userScore"),
+                        entityFileInfo.getLong("currentDownloads"),
+                        entityFileInfo.getLong("timeLastDownload"))
                 + "}");
     }
 
@@ -73,7 +73,7 @@ public class UserInformationServlet extends HttpServlet {
         return key.getId();
     }
 
-    private boolean canOperate(String userId, int userScore, int currentDownloads, String timeLastDownloadString) {
+    private boolean canOperate(String userId, long userScore, long currentDownloads, long timeLastDownloadString) {
         LocalDateTime timeLastDownload = new LocalDateTime(timeLastDownloadString);
 
         KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
