@@ -3,7 +3,7 @@ package fr.polytech;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
 import fr.polytech.business.DownloadRequest;
 
 import javax.servlet.http.HttpServlet;

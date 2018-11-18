@@ -1,8 +1,9 @@
 package fr.polytech.tasks;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
-import com.google.appengine.repackaged.com.google.gson.JsonObject;
-import com.google.appengine.repackaged.com.google.gson.JsonParser;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import fr.polytech.business.DownloadRequest;
 
 import javax.servlet.ServletException;

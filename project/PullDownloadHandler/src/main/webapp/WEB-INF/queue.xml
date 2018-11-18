@@ -3,9 +3,5 @@
     <queue>
         <name>queue-pull</name>
         <mode>pull</mode>
-
-        <retry-parameters>
-            <task-retry-limit>0</task-retry-limit>
-        </retry-parameters>
     </queue>
 </queue-entries>
