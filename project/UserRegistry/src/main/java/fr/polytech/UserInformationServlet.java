@@ -39,7 +39,7 @@ public class UserInformationServlet extends HttpServlet {
         long userId = insertUserInformation(UserInformation);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
-        out.println("{\"userId\": \"" + userId + "\"" + "}");
+        out.println("{\"userId\": \"" + userId + "\"" + ", \"canOperate\" : true}");
     }
 
     @Override
