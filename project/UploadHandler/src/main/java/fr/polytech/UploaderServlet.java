@@ -59,6 +59,11 @@ public class UploaderServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
+    if (req.getParameter("userId") == null) {
+      PrintWriter out = resp.getWriter();
+      out.println("wrong parameters");
+      return;
+    }
     int userId = Integer.parseInt(req.getParameter("userId"));
     PrintWriter out = resp.getWriter();
     if (!isAuthorizedToUpload(userId)) {
