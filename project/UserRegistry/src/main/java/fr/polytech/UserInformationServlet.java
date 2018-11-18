@@ -39,7 +39,7 @@ public class UserInformationServlet extends HttpServlet {
         long userId = insertUserInformation(UserInformation);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
-        out.println("{\"userId\": \"" + userId + "\"" + ", \"canOperate\" : true}");
+        out.println("{\"userId\": \"" + userId + "\"" + "}");
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserInformationServlet extends HttpServlet {
         Entity entityFileInfo = datastore.get(key);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
-        out.println("{\"fileUrl\": \"" + entityFileInfo.getString("fileUrl") + "\"" + "}");
+        out.println("{\"userId\": \"" + entityFileInfo.getString("userId") + "\"" + ", \"canOperate\" : true}");
     }
 
     private long insertUserInformation(UserInformation UserInformation) {
