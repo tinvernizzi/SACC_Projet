@@ -22,14 +22,12 @@ public class UserInformation {
 
     private String userName;
     private String userEmailAdress;
-    private int userId;
     private int userScore;
 
-    public UserInformation(String userName, String userEmailAdress, int userScore, int userId) {
+    public UserInformation(String userName, String userEmailAdress, int userScore) {
         this.userName = userName;
         this.userEmailAdress = userEmailAdress;
         this.userScore = userScore;
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -46,14 +44,6 @@ public class UserInformation {
 
     public void setUserEmailAdress(String userEmailAdress) {
         this.userEmailAdress = userEmailAdress;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getUserScore() {

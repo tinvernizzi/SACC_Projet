@@ -35,8 +35,7 @@ public class UserInformationServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         UserInformation UserInformation = new UserInformation(req.getParameter("userName"),
-                req.getParameter("userEmailAdress"), Integer.parseInt(req.getParameter("userScore")),
-                Integer.parseInt(req.getParameter("userId")));
+                req.getParameter("userEmailAdress"), Integer.parseInt(req.getParameter("userScore")));
         long userId = insertUserInformation(UserInformation);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
@@ -59,7 +58,7 @@ public class UserInformationServlet extends HttpServlet {
         Key key = datastore.allocateId(keyFactory.newKey());
         Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
                 .set("userEmailAdress", UserInformation.getUserEmailAdress())
-                .set("userScore", UserInformation.getUserScore()).set("userId", UserInformation.getUserId()).build();
+                .set("userScore", UserInformation.getUserScore()).build();
         datastore.put(entityFileInfo);
 
         return key.getId();
