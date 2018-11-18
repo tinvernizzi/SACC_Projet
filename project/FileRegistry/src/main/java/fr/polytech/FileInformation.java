@@ -22,10 +22,10 @@ public class FileInformation {
 
   private String fileName;
   private String fileUrl;
-  private int userId;
+  private long userId;
   private LocalDateTime dateTime;
 
-  public FileInformation(String fileName, String fileUrl, int userId, LocalDateTime dateTime) {
+  public FileInformation(String fileName, String fileUrl, long userId, LocalDateTime dateTime) {
     this.fileName = fileName;
     this.fileUrl = fileUrl + "&alt=media";
     this.userId = userId;
@@ -48,11 +48,11 @@ public class FileInformation {
     this.fileUrl = fileUrl;
   }
 
-  public int getUserId() {
+  public long getUserId() {
     return userId;
   }
 
-  public void setUserId(int userId) {
+  public void setUserId(long userId) {
     this.userId = userId;
   }
 
