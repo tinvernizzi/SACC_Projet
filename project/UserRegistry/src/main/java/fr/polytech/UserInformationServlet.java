@@ -53,7 +53,7 @@ public class UserInformationServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
                 + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
-                + entityFileInfo.getString("userScore") + ", \"canOperate\" : "
+                + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
                 + canOperate(entityFileInfo.getString("userId"),
                         Integer.parseInt(entityFileInfo.getString("userScore")),
                         Integer.parseInt(entityFileInfo.getString("currentDownloads")),
