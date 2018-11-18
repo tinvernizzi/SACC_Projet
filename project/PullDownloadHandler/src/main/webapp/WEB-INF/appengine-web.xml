@@ -18,5 +18,8 @@
   <version>1</version>
   <threadsafe>true</threadsafe>
   <runtime>java8</runtime>
+  <manual-scaling>
+    <instances>3</instances>
+  </manual-scaling>
 </appengine-web-app>
         <!-- [END config] -->

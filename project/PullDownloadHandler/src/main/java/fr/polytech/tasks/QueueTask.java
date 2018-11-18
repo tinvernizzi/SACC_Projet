@@ -17,7 +17,6 @@ public class QueueTask extends HttpServlet {
 
   public QueueTask(){
     ThreadManager.createBackgroundThread(new TriggerProcess()).start();
-    ThreadManager.createBackgroundThread(new TriggerProcess()).start();
   }
 
   @Override
