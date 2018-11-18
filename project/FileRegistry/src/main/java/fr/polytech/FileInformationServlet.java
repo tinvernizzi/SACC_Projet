@@ -35,7 +35,7 @@ public class FileInformationServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     FileInformation fileInformation = new FileInformation(req.getParameter("filename"),
-        req.getParameter("fileUrl"), Integer.parseInt(req.getParameter("userId")),
+        req.getParameter("fileUrl"), Long.parseLong(req.getParameter("userId")),
         LocalDateTime.now());
     long fileId = insertFileInformation(fileInformation);
     resp.addHeader("Content-Type", "application/json");

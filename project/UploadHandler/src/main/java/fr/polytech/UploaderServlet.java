@@ -17,6 +17,7 @@
 
 package fr.polytech;
 
+import static fr.polytech.RequestHttp.httpGet;
 import static fr.polytech.RequestHttp.httpPost;
 import static org.apache.http.protocol.HTTP.USER_AGENT;
 
@@ -55,6 +56,7 @@ public class UploaderServlet extends HttpServlet {
 
   private Storage storage = StorageOptions.getDefaultInstance().getService();
   private String bucketName = bundle.getString("fileBucket.name");
+  private String URL_USER_REGISTRY = bundle.getString("userRegistry.url");
 
 
   @Override
@@ -65,10 +67,10 @@ public class UploaderServlet extends HttpServlet {
       out.println("wrong parameters");
       return;
     }
-    int userId = Integer.parseInt(req.getParameter("userId"));
+    long userId = Long.parseLong(req.getParameter("userId"));
     PrintWriter out = resp.getWriter();
     if (!isAuthorizedToUpload(userId)) {
-      out.println("You are not authorized to upload more.");
+      out.println("You are not authorized to upload.");
       return;
     }
 
@@ -95,11 +97,17 @@ public class UploaderServlet extends HttpServlet {
     out.println("upload ok !");
   }
 
-  private boolean isAuthorizedToUpload(int userId) {
-    return true;
+  private boolean isAuthorizedToUpload(long userId) {
+    try {
+      String userInfo = httpGet(URL_USER_REGISTRY, "userId=" + userId);
+      JSONObject userInfoJson = new JSONObject(userInfo);
+      return userInfoJson.getBoolean("canOperate");
+    } catch (IOException e) {
+      return false;
+    }
   }
 
-  private String getUserEmail(int userId) {
+  private String getUserEmail(long userId) {
     return "";
   }
 
@@ -123,7 +131,7 @@ public class UploaderServlet extends HttpServlet {
     return blobInfo.getMediaLink();
   }
 
-  private String addFileInformation(String fileName, String fileUrl, int userId)
+  private String addFileInformation(String fileName, String fileUrl, long userId)
       throws IOException {
     String url = bundle.getString("fileRegistry.url");
     String urlParameters = "filename=" + fileName + "&userId=" + userId + "&fileUrl=" + fileUrl;
