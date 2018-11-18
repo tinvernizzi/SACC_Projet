@@ -27,17 +27,15 @@ public class DownloadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String fileId = request.getParameter("fileId");
-
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("userId", userId);
+        jsonObject.addProperty("fileId", fileId);
         if (isNoob(userId)) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("userId", userId);
-            jsonObject.addProperty("fileId", fileId);
             httpPost(bundle.getString("pushHandler.url"), jsonObject.toString());
         } else {
-            Queue q = QueueFactory.getQueue("pull-queue");
-            q.add(TaskOptions.Builder.withMethod(TaskOptions.Method.PULL).param("userId", userId).param("fileId", fileId));
+            httpPost(bundle.getString("pullHandler.url"), jsonObject.toString());
         }
-        response.getWriter().print("Download link is sent by email.");
+        response.getWriter().print("Download link will send by email.");
     }
 
     private boolean isNoob(String userId) throws IOException {
