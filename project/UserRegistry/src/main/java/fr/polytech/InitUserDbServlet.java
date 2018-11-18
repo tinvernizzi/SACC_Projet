@@ -51,16 +51,16 @@ public class InitUserDbServlet extends HttpServlet {
         userInformation = new UserInformation("Enzo", "mega_codeur_du_74@unice.fr", 80);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
-        userInformation = new UserInformation("Shiyang", "cool_codeur_de_chine@unice.fr", 100);
+        userInformation = new UserInformation("Shiyang", "cool_codeur@unice.fr", 120);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
-        userInformation = new UserInformation("Fabrice", "prof_cloud@unice.fr", 120);
+        userInformation = new UserInformation("Fabrice", "prof_cloud@unice.fr", 140);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
-        userInformation = new UserInformation("Sebastien", "prof_SOA@unice.fr", 140);
+        userInformation = new UserInformation("Sebastien", "prof_SOA@unice.fr", 240);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
-        userInformation = new UserInformation("Molines", "prof_AL@unice.fr", 160);
+        userInformation = new UserInformation("Molines", "prof_AL@unice.fr", 260);
         out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
     }
 
