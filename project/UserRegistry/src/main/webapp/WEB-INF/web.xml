@@ -6,7 +6,6 @@
   <servlet>
     <servlet-name>userServlet</servlet-name>
     <servlet-class>fr.polytech.UserInformationServlet</servlet-class>
-    <url-pattern>/</url-pattern>
   </servlet>
   <servlet-mapping>
     <servlet-name>userServlet</servlet-name>
