@@ -34,32 +34,34 @@ public class InitUserDbServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        PrintWriter out = resp.getWriter();
+
         UserInformation userInformation = new UserInformation("Tanguy Invernizzi", "ti@unice.fr", 0);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Mec Hyper Cool", "mhc@gmail.fr", 20);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Mec Giga Cool", "abc@unice.fr", 40);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Sebi", "super_giga_codeur_du_06@unice.fr", 60);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Enzo", "mega_codeur_du_74@unice.fr", 80);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Shiyang", "cool_codeur_de_chine@unice.fr", 100);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Fabrice", "prof_cloud@unice.fr", 120);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Sebastien", "prof_SOA@unice.fr", 140);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
 
         userInformation = new UserInformation("Molines", "prof_AL@unice.fr", 160);
-        insertUserInformation(userInformation);
+        out.println("{\"userId\": \"" + insertUserInformation(userInformation) + "\"" + "}");
     }
 
     private long insertUserInformation(UserInformation UserInformation) {
