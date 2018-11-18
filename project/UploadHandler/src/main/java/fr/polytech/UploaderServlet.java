@@ -67,9 +67,13 @@ public class UploaderServlet extends HttpServlet {
       out.println("wrong parameters");
       return;
     }
-    long userId = Long.parseLong(req.getParameter("userId"));
     PrintWriter out = resp.getWriter();
-    if (!isAuthorizedToUpload(userId)) {
+    long userId = Long.parseLong(req.getParameter("userId"));
+    JSONObject userInfoJson = getUserInfo(userId);
+    if(userInfoJson == null) {
+      out.println("user unknown");
+    }
+    if (!isAuthorizedToUpload(userInfoJson)) {
       out.println("You are not authorized to upload.");
       return;
     }
@@ -89,26 +93,26 @@ public class UploaderServlet extends HttpServlet {
     String fileId = addFileInformation(file.getName(), link,
         userId);
 
-    // modify user's score
-
-    // send mail to user with fileId
-    // sendMail(getUserEmail(userId), fileId);
+    sendMail(getUserEmail(userInfoJson), fileId);
 
     out.println("upload ok !");
   }
 
-  private boolean isAuthorizedToUpload(long userId) {
+  private boolean isAuthorizedToUpload(JSONObject userInfoJson) {
+      return userInfoJson.getBoolean("canOperate");
+  }
+
+  private JSONObject getUserInfo(long userId) {
     try {
       String userInfo = httpGet(URL_USER_REGISTRY, "userId=" + userId);
-      JSONObject userInfoJson = new JSONObject(userInfo);
-      return userInfoJson.getBoolean("canOperate");
+      return new JSONObject(userInfo);
     } catch (IOException e) {
-      return false;
+      return null;
     }
   }
 
-  private String getUserEmail(long userId) {
-    return "";
+  private String getUserEmail(JSONObject userInfoJson) {
+    return userInfoJson.getString("userEmailAdress");
   }
 
   private String uploadFile(FileItemStream file) throws IOException {
