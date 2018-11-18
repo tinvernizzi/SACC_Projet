@@ -6,7 +6,6 @@ import com.google.appengine.api.taskqueue.TaskHandle;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.appengine.repackaged.org.joda.time.LocalTime;
 import fr.polytech.business.DownloadRequest;
 
 import java.io.BufferedReader;
@@ -125,8 +124,6 @@ public class TriggerProcess implements Runnable {
                 response.append(inputLine);
             }
             in.close();
-
-            System.out.println(response.toString() + LocalTime.now().toString());
 
             return (JsonObject) new JsonParser().parse(response.toString());
         } else {
