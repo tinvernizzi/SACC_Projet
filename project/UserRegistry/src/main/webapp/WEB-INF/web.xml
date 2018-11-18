@@ -8,4 +8,8 @@
     <servlet-class>fr.polytech.UserInformationServlet</servlet-class>
     <url-pattern>/</url-pattern>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>userServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
 </web-app>
