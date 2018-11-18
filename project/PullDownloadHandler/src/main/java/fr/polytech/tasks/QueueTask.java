@@ -26,19 +26,11 @@ import java.util.concurrent.TimeUnit;
 
 public class QueueTask extends HttpServlet {
 
-  private static final String USER_AGENT = "Mozilla/5.0";
-  private static ResourceBundle bundle = ResourceBundle.getBundle("configPullHandler");
-
-  private static final String URL_FILE = bundle.getString("fileRegistry.url");
-
-  private static final String URL_MAIL = bundle.getString("mailer.url");
-
-  private static final String URL_USER = bundle.getString("userRegistry.url");
-
   private List<String> articles = new ArrayList<>();
 
   public QueueTask(){
-    ThreadManager.createBackgroundThread(new TriggerProcess(this)).start();
+    ThreadManager.createBackgroundThread(new TriggerProcess()).start();
+    ThreadManager.createBackgroundThread(new TriggerProcess()).start();
   }
 
   @Override
@@ -49,122 +41,5 @@ public class QueueTask extends HttpServlet {
     resp.setCharacterEncoding("UTF-8");
     resp.getWriter().write(json);
 
-  }
-
-  private String sendGET(String fileId) throws IOException {
-    URL obj = new URL(URL_FILE + fileId);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    con.setRequestMethod("GET");
-    con.setRequestProperty("User-Agent", USER_AGENT);
-    int responseCode = con.getResponseCode();
-
-    if (responseCode == HttpURLConnection.HTTP_OK) { // success
-      BufferedReader in = new BufferedReader(new InputStreamReader(
-              con.getInputStream()));
-      String inputLine;
-      StringBuilder response = new StringBuilder();
-
-      while ((inputLine = in.readLine()) != null) {
-        response.append(inputLine);
-      }
-      in.close();
-
-      JsonObject object = (JsonObject) new JsonParser().parse(response.toString());
-
-      return object.get("fileUrl").toString();
-    } else {
-      System.out.println("GET request not worked");
-    }
-
-    return "";
-  }
-
-  private void sendPOST(String address, String link) throws IOException {
-    URL obj = new URL(URL_MAIL);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    con.setRequestMethod("POST");
-    con.setRequestProperty("User-Agent", USER_AGENT);
-
-    // For POST only - START
-    con.setDoOutput(true);
-    OutputStream os = con.getOutputStream();
-
-    String params = "address=" + address + "&subject=PolyShare&content=" + link;
-
-    os.write(params.getBytes());
-    os.flush();
-    os.close();
-    // For POST only - END
-
-    con.getResponseCode();
-  }
-
-  private void processRequest(DownloadRequest request){
-    try {
-      JsonObject user = getUserFromGET(request.getUserId());
-
-      if(user.get("canOperate").getAsBoolean()) {
-        //Get from file registry
-        String link;
-
-        link = sendGET(request.getFileId());
-
-        articles.add(link);
-
-        sendPOST(user.get("userEmailAdress").getAsString(), link);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  private JsonObject getUserFromGET(long userId) throws IOException {
-    URL obj = new URL(URL_USER + userId);
-    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    con.setRequestMethod("GET");
-    con.setRequestProperty("User-Agent", USER_AGENT);
-    int responseCode = con.getResponseCode();
-
-    if (responseCode == HttpURLConnection.HTTP_OK) { // success
-      BufferedReader in = new BufferedReader(new InputStreamReader(
-              con.getInputStream()));
-      String inputLine;
-      StringBuilder response = new StringBuilder();
-
-      while ((inputLine = in.readLine()) != null) {
-        response.append(inputLine);
-      }
-      in.close();
-
-      System.out.println(response.toString());
-
-      return (JsonObject) new JsonParser().parse(response.toString());
-    } else {
-      System.out.println("GET request not worked");
-    }
-
-    return new JsonObject();
-  }
-
-  public void leaseTasks() {
-    Queue queue = QueueFactory.getQueue("queue-pull");
-
-    List<TaskHandle> tasks = queue.leaseTasks(1, TimeUnit.SECONDS, 1);
-
-    processTasks(tasks, queue);
-  }
-
-  private void processTasks(List<TaskHandle> tasks, Queue queue) {
-    String payload;
-
-    for (TaskHandle task : tasks) {
-      payload = new String(task.getPayload());
-
-      DownloadRequest downloadRequest = new Gson().fromJson(payload, DownloadRequest.class);
-
-      this.processRequest(downloadRequest);
-
-      queue.deleteTask(task);
-    }
   }
 }
