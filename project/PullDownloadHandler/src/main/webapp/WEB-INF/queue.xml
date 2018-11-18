@@ -2,7 +2,7 @@
 <queue-entries>
     <queue>
         <name>queue-pull</name>
-        <type>pull</type>
+        <mode>pull</mode>
 
         <retry-parameters>
             <task-retry-limit>0</task-retry-limit>
