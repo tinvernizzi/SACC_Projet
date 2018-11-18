@@ -63,26 +63,4 @@ public class UserInformationServlet extends HttpServlet {
 
         return key.getId();
     }
-
-    private String getRank(UserInformation UserInformation) {
-        int userScore = UserInformation.getUserScore();
-        if (userScore < 100) {
-            return "Noob";
-        }
-        if (userScore <= 200) {
-            return "Casual";
-        }
-        return "Leet";
-    }
-
-    private String canUserDownload(UserInformation UserInformation) {
-        int userScore = UserInformation.getUserScore();
-
-        if (userScore < 100) {
-
-        }
-        if (userScore <= 200) {
-
-        }
-    }
 }
