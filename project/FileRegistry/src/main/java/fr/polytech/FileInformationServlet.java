@@ -45,6 +45,11 @@ public class FileInformationServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    if (req.getParameter("fileId") == null) {
+      PrintWriter out = resp.getWriter();
+      out.println("Upload Handler");
+      return;
+    }
     KeyFactory keyFactory = datastore.newKeyFactory().setKind("fileInformation");
     Key key = keyFactory.newKey(Long.parseLong(req.getParameter("fileId")));
     Entity entityFileInfo = datastore.get(key);
