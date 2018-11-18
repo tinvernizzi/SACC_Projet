@@ -19,7 +19,7 @@
                 <version>${appengine.sdk.version}</version>
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
-                    <port>8080</port>
+                    <port>8090</port>
                     <address>0.0.0.0</address>
                 </configuration>
             </plugin>

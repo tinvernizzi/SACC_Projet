@@ -47,7 +47,7 @@ public class FileInformationServlet extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     if (req.getParameter("fileId") == null) {
       PrintWriter out = resp.getWriter();
-      out.println("File Registry");
+      out.println("File Registry service");
       return;
     }
     KeyFactory keyFactory = datastore.newKeyFactory().setKind("fileInformation");

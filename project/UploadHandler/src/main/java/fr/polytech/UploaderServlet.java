@@ -174,7 +174,7 @@ public class UploaderServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     PrintWriter out = resp.getWriter();
-    out.println("Upload Handler");
+    out.println("this url allows to request file");
   }
 }
 // [END example]
