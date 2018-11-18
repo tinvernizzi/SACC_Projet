@@ -15,9 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 @WebServlet(name = "MailerServlet")
 public class MailerServlet extends HttpServlet {
+    private static ResourceBundle bundle = ResourceBundle.getBundle("configMailer");
+    private String appName = bundle.getString("app.name");
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String address = request.getParameter("address");
         String subject = request.getParameter("subject");
@@ -48,7 +52,7 @@ public class MailerServlet extends HttpServlet {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress("no-reply@[App_Name].appspotmail.com", "polyshare"));
+        msg.setFrom(new InternetAddress("no-reply@" + appName + ".appspotmail.com", "polyshare"));
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(address, "User"));
         msg.setSubject(subject);
         msg.setText(content);
