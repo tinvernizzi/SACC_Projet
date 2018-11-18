@@ -28,6 +28,7 @@ import com.google.cloud.storage.StorageOptions;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -36,20 +37,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONObject;
 
 // [START example]
 @SuppressWarnings("serial")
-@MultipartConfig
 public class UploaderServlet extends HttpServlet {
 
   private static ResourceBundle bundle = ResourceBundle.getBundle("configUploadHandler");
@@ -60,18 +58,27 @@ public class UploaderServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
+      throws IOException {
     int userId = Integer.parseInt(req.getParameter("userId"));
     PrintWriter out = resp.getWriter();
     if (!isAuthorizedToUpload(userId)) {
       out.println("You are not authorized to upload more.");
       return;
     }
-    Part filePart = req.getPart("file");
-    // String link = uploadFile(filePart, bucketName);
-    String link = "test.com"; //test
 
-    String fileId = addFileInformation(filePart.getSubmittedFileName(), link,
+    FileItemStream file = null;
+    try {
+      ServletFileUpload upload = new ServletFileUpload();
+      FileItemIterator iter = upload.getItemIterator(req);
+      file = iter.next();
+    } catch (FileUploadException e) {
+      out.println("Upload Failed.");
+      return;
+    }
+
+    String link = uploadFile(file);
+
+    String fileId = addFileInformation(file.getName(), link,
         userId);
 
     // modify user's score
@@ -79,7 +86,7 @@ public class UploaderServlet extends HttpServlet {
     // send mail to user with fileId
     // sendMail(getUserEmail(userId), fileId);
 
-    out.println("upload ok ! " + fileId);
+    out.println("upload ok !");
   }
 
   private boolean isAuthorizedToUpload(int userId) {
@@ -90,11 +97,11 @@ public class UploaderServlet extends HttpServlet {
     return "";
   }
 
-  private String uploadFile(Part filePart, final String bucketName) throws IOException {
-    DateTimeFormatter dtf = DateTimeFormat.forPattern("-YYYY-MM-dd-HHmmssSSS");
-    DateTime dt = DateTime.now(DateTimeZone.UTC);
-    String dtString = dt.toString(dtf);
-    final String fileName = filePart.getSubmittedFileName() + dtString;
+  private String uploadFile(FileItemStream file) throws IOException {
+
+    InputStream fileStream = file.openStream();
+
+    String fileName = file.getName();
 
     // the inputstream is closed by default, so we don't need to close it here
     BlobInfo blobInfo =
@@ -104,8 +111,9 @@ public class UploaderServlet extends HttpServlet {
                 // Modify access list to allow all users with link to read file
                 .setAcl(new ArrayList<>(Arrays.asList(Acl.of(User.ofAllUsers(), Role.READER))))
                 .build(),
-            filePart.getInputStream());
+            fileStream);
     // return the public download link
+
     return blobInfo.getMediaLink();
   }
 

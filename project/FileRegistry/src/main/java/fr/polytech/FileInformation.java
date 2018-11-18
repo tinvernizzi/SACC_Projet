@@ -27,7 +27,7 @@ public class FileInformation {
 
   public FileInformation(String fileName, String fileUrl, int userId, LocalDateTime dateTime) {
     this.fileName = fileName;
-    this.fileUrl = fileUrl;
+    this.fileUrl = fileUrl + "&alt=media";
     this.userId = userId;
     this.dateTime = dateTime;
   }
