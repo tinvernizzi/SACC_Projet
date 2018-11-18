@@ -28,28 +28,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.LocalDateTime;
 
-public class UserInformationServlet extends HttpServlet {
+public class InitUserDbServlet extends HttpServlet {
 
     private Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserInformation UserInformation = new UserInformation(req.getParameter("userName"),
-                req.getParameter("userEmailAdress"), 0);
-        long userId = insertUserInformation(UserInformation);
-        resp.addHeader("Content-Type", "application/json");
-        PrintWriter out = resp.getWriter();
-        out.println("{\"userId\": \"" + userId + "\"" + "}");
-    }
+        UserInformation userInformation = new UserInformation("Tanguy Invernizzi", "ti@unice.fr", 0);
+        insertUserInformation(userInformation);
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
-        Key key = keyFactory.newKey(Long.parseLong(req.getParameter("userId")));
-        Entity entityFileInfo = datastore.get(key);
-        resp.addHeader("Content-Type", "application/json");
-        PrintWriter out = resp.getWriter();
-        out.println("{\"fileUrl\": \"" + entityFileInfo.getString("fileUrl") + "\"" + "}");
+        userInformation = new UserInformation("Mec Hyper Cool", "mhc@gmail.fr", 20);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Mec Giga Cool", "abc@unice.fr", 40);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Sebi", "super_giga_codeur_du_06@unice.fr", 60);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Enzo", "mega_codeur_du_74@unice.fr", 80);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Shiyang", "cool_codeur_de_chine@unice.fr", 100);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Fabrice", "prof_cloud@unice.fr", 120);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Sebastien", "prof_SOA@unice.fr", 140);
+        insertUserInformation(userInformation);
+
+        userInformation = new UserInformation("Molines", "prof_AL@unice.fr", 160);
+        insertUserInformation(userInformation);
     }
 
     private long insertUserInformation(UserInformation UserInformation) {

@@ -11,4 +11,12 @@
     <servlet-name>userServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>InitUserDbServlet</servlet-name>
+    <servlet-class>fr.polytech.InitUserDbServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InitUserDbServlet</servlet-name>
+    <url-pattern>/initDb</url-pattern>
+  </servlet-mapping>
 </web-app>
