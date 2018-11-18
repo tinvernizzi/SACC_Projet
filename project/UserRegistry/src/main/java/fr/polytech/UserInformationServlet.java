@@ -49,7 +49,8 @@ public class UserInformationServlet extends HttpServlet {
         Entity entityFileInfo = datastore.get(key);
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
-        out.println("{\"userId\": \"" + entityFileInfo.getString("userId") + "\"" + ", \"canOperate\" : true}");
+        out.println("{\"userId\": \"" + entityFileInfo.getString("userId") + "\"" + ", \"userEmailAdress\" : \""
+                + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"canOperate\" : true}");
     }
 
     private long insertUserInformation(UserInformation UserInformation) {
