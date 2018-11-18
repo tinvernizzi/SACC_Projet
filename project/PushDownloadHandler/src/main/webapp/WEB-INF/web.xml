@@ -6,7 +6,7 @@
   <!--Servlet for push queue -->
   <servlet>
     <servlet-name>push</servlet-name>
-    <servlet-class>fr.polytech.PullServlet</servlet-class>
+    <servlet-class>fr.polytech.PushServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>push</servlet-name>
