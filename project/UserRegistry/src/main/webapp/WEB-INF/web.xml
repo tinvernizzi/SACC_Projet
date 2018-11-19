@@ -19,4 +19,12 @@
     <servlet-name>InitUserDbServlet</servlet-name>
     <url-pattern>/initDb</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>UserScoreServlet</servlet-name>
+    <servlet-class>fr.polytech.UserScoreServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserScoreServlet</servlet-name>
+    <url-pattern>/score</url-pattern>
+  </servlet-mapping>
 </web-app>
