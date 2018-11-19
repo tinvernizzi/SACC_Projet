@@ -54,10 +54,13 @@ public class UserInformationServlet extends HttpServlet {
         out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
                 + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
                 + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
+                + "true"
+                /*
                 + canOperate(req.getParameter("userId"),
                         entityFileInfo.getLong("userScore"),
                         entityFileInfo.getLong("currentDownloads"),
                         entityFileInfo.getString("timeLastDownload"))
+                        */
                 + "}");
     }
 
