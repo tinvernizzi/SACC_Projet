@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.joda.time.LocalDateTime;
 
-public class InitUserDbServlet extends HttpServlet {
+public class UserScoreServlet extends HttpServlet {
 
     private Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
@@ -39,7 +39,8 @@ public class InitUserDbServlet extends HttpServlet {
 
         Entity oldEntityFileInfo = datastore.get(key);
 
-        Entity entityFileInfo = Entity.newBuilder(key).set("userName", oldEntityFileInfo.getString("userName"))
+        Entity entityFileInfo = Entity.newBuilder(key)
+                .set("userName", oldEntityFileInfo.getString("userName"))
                 .set("userEmailAdress", oldEntityFileInfo.getString("userEmailAdress"))
                 .set("currentDownloads", oldEntityFileInfo.getString("currentDownloads"))
                 .set("timeLastDownload", oldEntityFileInfo.getString("timeLastDownload"))
