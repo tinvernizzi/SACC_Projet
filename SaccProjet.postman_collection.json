@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "32f76511-04f3-4da2-88a5-afa956209df4",
+		"name": "SaccProjet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FillDatabase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/",
+					"protocol": "https",
+					"host": [
+						"userregistry-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUserScore",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/score?userId=&userScore=",
+					"protocol": "https",
+					"host": [
+						"userregistry-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"score"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						},
+						{
+							"key": "userScore",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RequestUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064",
+					"protocol": "https",
+					"host": [
+						"userregistry-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5700305828184064"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RequestUser Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064&userEmailAdress=adsasd@asddas.fr",
+					"protocol": "https",
+					"host": [
+						"userregistry-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5700305828184064"
+						},
+						{
+							"key": "userEmailAdress",
+							"value": "adsasd@asddas.fr"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=&fileId=",
+					"protocol": "https",
+					"host": [
+						"dispatcher-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"download"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						},
+						{
+							"key": "fileId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=",
+					"host": [
+						"uploadhandler-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"service"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "503d72ab-37c7-4ae4-a674-843ec4bc609e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f9e536fc-e485-4c11-9fe8-1843d5f663ef",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
