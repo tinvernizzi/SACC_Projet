@@ -53,7 +53,7 @@ public class UserInformationServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
                 + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
-                + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
+                + entityFileInfo.getLong("userScore") + "\", \"canOperate\" : "
                 + "true"
                 /*
                 + canOperate(req.getParameter("userId"),
