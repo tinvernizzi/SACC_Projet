@@ -52,8 +52,8 @@ public class UserInformationServlet extends HttpServlet {
         resp.addHeader("Content-Type", "application/json");
         PrintWriter out = resp.getWriter();
         out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
-                + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": \""
-                + entityFileInfo.getLong("userScore") + "\", \"canOperate\" : "
+                + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": "
+                + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
                 + "true"
                 /*
                 + canOperate(req.getParameter("userId"),
