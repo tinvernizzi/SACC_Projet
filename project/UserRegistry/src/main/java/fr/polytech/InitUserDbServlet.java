@@ -26,6 +26,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 public class InitUserDbServlet extends HttpServlet {
@@ -70,7 +72,10 @@ public class InitUserDbServlet extends HttpServlet {
         Key key = datastore.allocateId(keyFactory.newKey());
         Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
                 .set("userEmailAdress", UserInformation.getUserEmailAdress())
-                .set("userScore", UserInformation.getUserScore()).build();
+                .set("userScore", UserInformation.getUserScore())
+                .set("currentDownloads", UserInformation.getCurrentDownloads())
+                .set("timeLastDownload", LocalDate.now().toString())
+                .build();
         datastore.put(entityFileInfo);
 
         return key.getId();
