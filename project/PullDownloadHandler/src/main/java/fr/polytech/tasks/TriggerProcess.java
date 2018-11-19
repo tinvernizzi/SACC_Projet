@@ -80,7 +80,8 @@ public class TriggerProcess implements Runnable {
         con.setDoOutput(true);
         OutputStream os = con.getOutputStream();
 
-        String params = "address=" + address + "&subject=PolyShare&content=" + link;
+        String params = "address=" + address + "&subject=PolyShare&content=" +
+                "\" Thanks for downloading, here is your link : " + link + "&alt=media\"";
 
         os.write(params.getBytes());
         os.flush();
