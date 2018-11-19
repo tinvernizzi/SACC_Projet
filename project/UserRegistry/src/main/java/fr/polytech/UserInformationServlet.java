@@ -70,7 +70,9 @@ public class UserInformationServlet extends HttpServlet {
         Key key = datastore.allocateId(keyFactory.newKey());
         Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
                 .set("userEmailAdress", UserInformation.getUserEmailAdress())
-                .set("userScore", UserInformation.getUserScore()).build();
+                .set("userScore", UserInformation.getUserScore())
+            .set("currentDownloads", UserInformation.getCurrentDownloads())
+            .set("timeLastDownload", UserInformation.getLastDownloadTime().toString()).build();
         datastore.put(entityFileInfo);
 
         return key.getId();
