@@ -4,7 +4,6 @@ Les requetes postman se trouvent dans le fichier SaccProjet.postman_collection.j
 
 Nous n'avons pas certaines routes :
   - Réinitialisation des données
-  - Modification du score
   
 Nous n'avons pas eu le temps d'implémenter ces fonctionnalités :
   - Suppression des fichiers au bout de X minutes
