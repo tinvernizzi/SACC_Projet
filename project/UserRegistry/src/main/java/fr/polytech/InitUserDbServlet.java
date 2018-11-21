@@ -73,8 +73,8 @@ public class InitUserDbServlet extends HttpServlet {
         Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
                 .set("userEmailAdress", UserInformation.getUserEmailAdress())
                 .set("userScore", UserInformation.getUserScore())
-                .set("currentDownloads", UserInformation.getCurrentDownloads())
-                .set("timeLastDownload", LocalDate.now().toString())
+                .set("currentOperationNumber", UserInformation.getCurrentOperationNumber())
+                .set("timeLastOperation", LocalDate.now().toString())
                 .build();
         datastore.put(entityFileInfo);
 

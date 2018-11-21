@@ -32,78 +32,111 @@ import org.joda.time.Minutes;
 
 public class UserInformationServlet extends HttpServlet {
 
-    private Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
+  private Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
 
-    @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        UserInformation UserInformation = new UserInformation(req.getParameter("userName"),
-                req.getParameter("userEmailAdress"), 0);
-        long userId = insertUserInformation(UserInformation);
-        resp.addHeader("Content-Type", "application/json");
-        PrintWriter out = resp.getWriter();
-        out.println("{\"userId\": \"" + userId + "\"" + "}");
-    }
+  @Override
+  public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    UserInformation UserInformation = new UserInformation(req.getParameter("userName"),
+        req.getParameter("userEmailAdress"), 0);
+    long userId = insertUserInformation(UserInformation);
+    resp.addHeader("Content-Type", "application/json");
+    PrintWriter out = resp.getWriter();
+    out.println("{\"userId\": \"" + userId + "\"" + "}");
+  }
 
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
-        Key key = keyFactory.newKey(Long.parseLong(req.getParameter("userId")));
-        Entity entityFileInfo = datastore.get(key);
-        resp.addHeader("Content-Type", "application/json");
-        PrintWriter out = resp.getWriter();
-        out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\"" + ", \"userEmailAdress\" : \""
-                + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": "
-                + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
-                + "true"
-                /*
-                + canOperate(req.getParameter("userId"),
-                        entityFileInfo.getLong("userScore"),
-                        entityFileInfo.getLong("currentDownloads"),
-                        entityFileInfo.getString("timeLastDownload"))
-                        */
-                + "}");
-    }
+  @Override
+  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
+    Key key = keyFactory.newKey(Long.parseLong(req.getParameter("userId")));
+    Entity entityFileInfo = datastore.get(key);
+    UserInformation userInformation = new UserInformation(entityFileInfo.getString("userName"),
+        entityFileInfo.getString("userEmailAdress"), entityFileInfo.getLong("userScore"),
+        new LocalDateTime(entityFileInfo.getString("timeLastOperation")),
+        entityFileInfo.getLong("currentOperationNumber"));
+    resp.addHeader("Content-Type", "application/json");
+    PrintWriter out = resp.getWriter();
+    out.println("{\"userName\": \"" + entityFileInfo.getString("userName") + "\""
+        + ", \"userEmailAdress\" : \""
+        + entityFileInfo.getString("userEmailAdress") + "\"" + ", \"userScore\": "
+        + entityFileInfo.getLong("userScore") + ", \"canOperate\" : "
+        + canOperate(req.getParameter("userId"),
+        userInformation)
+        + "}");
+  }
 
-    private long insertUserInformation(UserInformation UserInformation) {
-        KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
+  private long insertUserInformation(UserInformation UserInformation) {
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
 
-        Key key = datastore.allocateId(keyFactory.newKey());
-        Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
-                .set("userEmailAdress", UserInformation.getUserEmailAdress())
-                .set("userScore", UserInformation.getUserScore())
-            .set("currentDownloads", UserInformation.getCurrentDownloads())
-            .set("timeLastDownload", UserInformation.getLastDownloadTime().toString()).build();
-        datastore.put(entityFileInfo);
+    Key key = datastore.allocateId(keyFactory.newKey());
+    Entity entityFileInfo = Entity.newBuilder(key).set("userName", UserInformation.getUserName())
+        .set("userEmailAdress", UserInformation.getUserEmailAdress())
+        .set("userScore", UserInformation.getUserScore())
+        .set("currentOperationNumber", UserInformation.getCurrentOperationNumber())
+        .set("timeLastOperation", UserInformation.getLastOperationTime().toString()).build();
+    datastore.put(entityFileInfo);
 
-        return key.getId();
-    }
+    return key.getId();
+  }
 
-    private boolean canOperate(String userId, long userScore, long currentDownloads, String timeLastDownloadString) {
-        LocalDateTime timeLastDownload = new LocalDateTime(timeLastDownloadString);
+  private boolean canOperate(String userId, UserInformation userInformation) {
 
-        KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
-        Key key = keyFactory.newKey(Long.parseLong(userId));
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
+    Key key = keyFactory.newKey(Long.parseLong(userId));
 
-        int minutes = Minutes.minutesBetween(timeLastDownload, LocalDateTime.now()).getMinutes();
+    int minutes = Minutes.minutesBetween(userInformation.getLastOperationTime(), LocalDateTime.now()).getMinutes();
 
-        if (minutes >= 1) {
-            // reset timer
+    if (userInformation.getUserScore() <= 100) {
+      if (minutes < 1) {
+        return false;
+      } else {
+        userInformation.setLastOperationTime(LocalDateTime.now());
+        updateLastDownload(userId, userInformation);
+      }
+    } else if (userInformation.getUserScore() <= 200) {
+      if (minutes < 1) {
+        if (userInformation.getCurrentOperationNumber() >= 2) {
+          return false;
+        } else {
+          userInformation.setCurrentOperationNumber(userInformation.getCurrentOperationNumber() + 1);
+          updateLastDownload(userId, userInformation);
+          // currentDowload ++
         }
-        if ((userScore) > 201) {
-            if ((currentDownloads) >= 4) {
-                return false;
-            }
-            return true;
+      } else {
+        userInformation.setCurrentOperationNumber(1);
+        userInformation.setLastOperationTime(LocalDateTime.now());
+        updateLastDownload(userId, userInformation);
+        // update time
+        // set currentDownload = 1
+      }
+    } else {
+      if (minutes < 1) {
+        if (userInformation.getCurrentOperationNumber() >= 4) {
+          return false;
+        } else {
+          userInformation.setCurrentOperationNumber(userInformation.getCurrentOperationNumber() + 1);
+          updateLastDownload(userId, userInformation);
+          // currentDowload ++
         }
-        if (userScore > 100) {
-            if (currentDownloads >= 2) {
-                return false;
-            }
-            return true;
-        }
-        if (currentDownloads > 1) {
-            return false;
-        }
-        return true;
+      } else {
+        userInformation.setCurrentOperationNumber(1);
+        userInformation.setLastOperationTime(LocalDateTime.now());
+        updateLastDownload(userId, userInformation);
+        // update time
+        // set currentDownload = 1
+      }
     }
+    return true;
+  }
+
+  private void updateLastDownload(String userId, UserInformation userInformation) {
+    KeyFactory keyFactory = datastore.newKeyFactory().setKind("UserInformation");
+    Key key = keyFactory.newKey(Long.parseLong(userId));
+
+    Entity entityFileInfo = Entity.newBuilder(key).set("userName", userInformation.getUserName())
+        .set("userEmailAdress", userInformation.getUserEmailAdress())
+        .set("userScore", userInformation.getUserScore())
+        .set("currentOperationNumber", userInformation.getCurrentOperationNumber())
+        .set("timeLastOperation", userInformation.getLastOperationTime().toString()).build();
+    datastore.put(entityFileInfo);
+  }
 }

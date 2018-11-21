@@ -20,57 +20,66 @@ import org.joda.time.LocalDateTime;
 
 public class UserInformation {
 
-    private String userName;
-    private String userEmailAdress;
-    private int userScore;
-    private LocalDateTime lastDownloadTime;
-    private int currentDownloads;
+  private String userName;
+  private String userEmailAdress;
+  private long userScore;
+  private LocalDateTime lastOperationTime;
+  private long currentOperationNumber;
 
-    public UserInformation(String userName, String userEmailAdress, int userScore) {
-        this.userName = userName;
-        this.userEmailAdress = userEmailAdress;
-        this.userScore = userScore;
-        this.lastDownloadTime = LocalDateTime.now();
-        this.currentDownloads = 0;
-    }
+  public UserInformation(String userName, String userEmailAdress, long userScore) {
+    this.userName = userName;
+    this.userEmailAdress = userEmailAdress;
+    this.userScore = userScore;
+    this.lastOperationTime = LocalDateTime.now().minusHours(1);
+    this.currentOperationNumber = 0;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public UserInformation(String userName, String userEmailAdress, long userScore,
+      LocalDateTime lastDownloadTime, long currentDownloads) {
+    this.userName = userName;
+    this.userEmailAdress = userEmailAdress;
+    this.userScore = userScore;
+    this.lastOperationTime = lastDownloadTime;
+    this.currentOperationNumber = currentDownloads;
+  }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+  public String getUserName() {
+    return userName;
+  }
 
-    public String getUserEmailAdress() {
-        return userEmailAdress;
-    }
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-    public void setUserEmailAdress(String userEmailAdress) {
-        this.userEmailAdress = userEmailAdress;
-    }
+  public String getUserEmailAdress() {
+    return userEmailAdress;
+  }
 
-    public int getUserScore() {
-        return userScore;
-    }
+  public void setUserEmailAdress(String userEmailAdress) {
+    this.userEmailAdress = userEmailAdress;
+  }
 
-    public void setUserScore(int userScore) {
-        this.userScore = userScore;
-    }
+  public long getUserScore() {
+    return userScore;
+  }
 
-    public LocalDateTime getLastDownloadTime() {
-        return this.lastDownloadTime;
-    }
+  public void setUserScore(long userScore) {
+    this.userScore = userScore;
+  }
 
-    public void setLastDownloadTime(LocalDateTime lastDownloadTime) {
-        this.lastDownloadTime = lastDownloadTime;
-    }
+  public LocalDateTime getLastOperationTime() {
+    return this.lastOperationTime;
+  }
 
-    public int getCurrentDownloads() {
-        return this.currentDownloads;
-    }
+  public void setLastOperationTime(LocalDateTime lastOperationTime) {
+    this.lastOperationTime = lastOperationTime;
+  }
 
-    public void setCurrentDownloads(int currentDownloads) {
-        this.currentDownloads = currentDownloads;
-    }
+  public long getCurrentOperationNumber() {
+    return this.currentOperationNumber;
+  }
+
+  public void setCurrentOperationNumber(long currentOperationNumber) {
+    this.currentOperationNumber = currentOperationNumber;
+  }
 }

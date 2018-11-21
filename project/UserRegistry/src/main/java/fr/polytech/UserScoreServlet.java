@@ -42,8 +42,8 @@ public class UserScoreServlet extends HttpServlet {
         Entity entityFileInfo = Entity.newBuilder(key)
                 .set("userName", oldEntityFileInfo.getString("userName"))
                 .set("userEmailAdress", oldEntityFileInfo.getString("userEmailAdress"))
-                .set("currentDownloads", oldEntityFileInfo.getLong("currentDownloads"))
-                .set("timeLastDownload", oldEntityFileInfo.getString("timeLastDownload"))
+                .set("currentOperationNumber", oldEntityFileInfo.getLong("currentOperationNumber"))
+                .set("timeLastOperation", oldEntityFileInfo.getString("timeLastOperation"))
                 .set("userScore", Long.parseLong(req.getParameter("userScore"))).build();
 
         datastore.put(entityFileInfo);
