@@ -26,7 +26,7 @@ POST {UserId, userScore}
 - Telecharger un fichier
 Il est possible de mettre l'ID de chaque rang existant afin d'etre redirigé vers la queue associée (push dans le cas des noobs, pull dans le reste)
 
-https://dispatcher-dot-polyshare-222618.appspot.com/
+https://dispatcher-dot-polyshare-222618.appspot.com/download
 POST {UserId, FileId}
 
 
@@ -34,7 +34,7 @@ POST {UserId, FileId}
 
 Upload un fichier enverra un mail contenant l'ID du fichier stocké, permettant d'acceder au téléchargement de celui ci
 
-https://uploadhandler-dot-polyshare-222618.appspot.com/
+https://uploadhandler-dot-polyshare-222618.appspot.com/service
 POST {UserId, File}
 
 
