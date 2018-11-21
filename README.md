@@ -21,13 +21,13 @@ POST {userName, userEmailAdress}
 - Modifier le score d'un utilisateur
 
 https://userregistry-dot-polyshare-222618.appspot.com/score
-POST {UserId, userScore}
+POST {userId, userScore}
 
 - Telecharger un fichier
 Il est possible de mettre l'ID de chaque rang existant afin d'etre redirigé vers la queue associée (push dans le cas des noobs, pull dans le reste)
 
 https://dispatcher-dot-polyshare-222618.appspot.com/download
-POST {UserId, FileId}
+POST {userId, fileId}
 
 
 - Upload un fichier
@@ -35,7 +35,7 @@ POST {UserId, FileId}
 Upload un fichier enverra un mail contenant l'ID du fichier stocké, permettant d'acceder au téléchargement de celui ci
 
 https://uploadhandler-dot-polyshare-222618.appspot.com/service
-POST {UserId, File}
+POST {userId, File}
 
 
 Nous n'avons pas certaines routes :
@@ -43,10 +43,11 @@ Nous n'avons pas certaines routes :
   
 Nous n'avons pas eu le temps d'implémenter ces fonctionnalités :
   - Suppression des fichiers au bout de X minutes
-  - Limitation des users (uniquement la redirection vers les queues), mais la communication vers le service mockée est fonctionnelle
 
 Note : 
 Le mail contient le lien vers la ressource, qui a été créé automatiquement pour google. Cependant, il faudra ajouter "&alt=media" au lien, sans quoi le téléchargement ne se fera pas.
+
+Par défaut, les 
 
 # Membres
 
