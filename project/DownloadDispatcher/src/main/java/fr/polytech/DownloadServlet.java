@@ -32,7 +32,7 @@ public class DownloadServlet extends HttpServlet {
         } else {
             httpPost(bundle.getString("pullHandler.url"), jsonObject.toString());
         }
-        response.getWriter().print("Download link will send by email.");
+        response.getWriter().print("A mail will be sent soon.");
     }
 
     private boolean isNoob(String userId) throws IOException {
