@@ -102,6 +102,8 @@ public class TriggerProcess implements Runnable {
                 link = sendGET(request.getFileId());
 
                 sendPOST(user.get("userEmailAdress").getAsString(), link);
+            } else {
+                sendPOST(user.get("userEmailAdress").getAsString(), "Sike, you thought");
             }
         } catch (IOException e) {
             e.printStackTrace();

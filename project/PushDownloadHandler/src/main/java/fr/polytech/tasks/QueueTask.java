@@ -66,6 +66,8 @@ public class QueueTask extends HttpServlet {
         articles.add(link);
 
         sendPOST(user.get("userEmailAdress").getAsString(), link);
+      } else {
+        sendPOST(user.get("userEmailAdress").getAsString(), "Sike, you thought");
       }
     } catch (IOException e) {
       e.printStackTrace();
