@@ -64,7 +64,7 @@
 			"response": []
 		},
 		{
-			"name": "RequestUser",
+			"name": "RequestUser as Leet",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -94,7 +94,37 @@
 			"response": []
 		},
 		{
-			"name": "RequestUser Copy",
+			"name": "RequestUser as Noob",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064",
+					"protocol": "https",
+					"host": [
+						"userregistry-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "5700305828184064"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -128,7 +158,7 @@
 			"response": []
 		},
 		{
-			"name": "Download",
+			"name": "Download as Leet",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -162,7 +192,76 @@
 			"response": []
 		},
 		{
-			"name": "Upload",
+			"name": "Download as Noob",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=&fileId=",
+					"protocol": "https",
+					"host": [
+						"dispatcher-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"download"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						},
+						{
+							"key": "fileId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload as Leet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=",
+					"host": [
+						"uploadhandler-dot-polyshare-222618",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"service"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload as Noob",
 			"request": {
 				"method": "POST",
 				"header": [],
