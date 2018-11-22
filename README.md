@@ -47,7 +47,11 @@ Nous n'avons pas eu le temps d'implémenter ces fonctionnalités :
 Note : 
 Le mail contient le lien vers la ressource, qui a été créé automatiquement pour google. Cependant, il faudra ajouter "&alt=media" au lien, sans quoi le téléchargement ne se fera pas.
 
-Par défaut, les 
+Nous avons fait une adresse mail pour pouvoir receptionner les mails
+Il faut se créer un compte via le userregistry, avec cette adresse :
+
+GMAIL : sacc.projet.si5@gmail.com
+PWD : SACC_2018_POLY
 
 # Membres
 
