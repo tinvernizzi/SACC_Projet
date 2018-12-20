@@ -15,7 +15,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/",
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/initDb",
 					"protocol": "https",
 					"host": [
 						"userregistry-dot-polyshare-222618",
@@ -23,7 +23,7 @@
 						"com"
 					],
 					"path": [
-						""
+						"initDb"
 					]
 				}
 			},
@@ -39,7 +39,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/score?userId=&userScore=",
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/score?userId=5724160613416960&userScore=500",
 					"protocol": "https",
 					"host": [
 						"userregistry-dot-polyshare-222618",
@@ -52,11 +52,11 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "5724160613416960"
 						},
 						{
 							"key": "userScore",
-							"value": ""
+							"value": "500"
 						}
 					]
 				}
@@ -73,7 +73,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064",
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5724160613416960",
 					"protocol": "https",
 					"host": [
 						"userregistry-dot-polyshare-222618",
@@ -86,7 +86,7 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": "5700305828184064"
+							"value": "5724160613416960"
 						}
 					]
 				}
@@ -103,7 +103,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064",
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5742796208078848",
 					"protocol": "https",
 					"host": [
 						"userregistry-dot-polyshare-222618",
@@ -116,7 +116,7 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": "5700305828184064"
+							"value": "5742796208078848"
 						}
 					]
 				}
@@ -133,7 +133,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userId=5700305828184064&userEmailAdress=adsasd@asddas.fr",
+					"raw": "https://userregistry-dot-polyshare-222618.appspot.com/?userName=saac3&userEmailAdress=sacc.projet.si5@gmail.com",
 					"protocol": "https",
 					"host": [
 						"userregistry-dot-polyshare-222618",
@@ -145,12 +145,12 @@
 					],
 					"query": [
 						{
-							"key": "userId",
-							"value": "5700305828184064"
+							"key": "userName",
+							"value": "saac3"
 						},
 						{
 							"key": "userEmailAdress",
-							"value": "adsasd@asddas.fr"
+							"value": "sacc.projet.si5@gmail.com"
 						}
 					]
 				}
@@ -167,7 +167,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=&fileId=",
+					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=5724160613416960&fileId=5744822023356416",
 					"protocol": "https",
 					"host": [
 						"dispatcher-dot-polyshare-222618",
@@ -180,11 +180,11 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "5724160613416960"
 						},
 						{
 							"key": "fileId",
-							"value": ""
+							"value": "5744822023356416"
 						}
 					]
 				}
@@ -201,7 +201,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=&fileId=",
+					"raw": "https://dispatcher-dot-polyshare-222618.appspot.com/download?userId=5742796208078848&fileId=5744822023356416",
 					"protocol": "https",
 					"host": [
 						"dispatcher-dot-polyshare-222618",
@@ -214,11 +214,11 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "5742796208078848"
 						},
 						{
 							"key": "fileId",
-							"value": ""
+							"value": "5744822023356416"
 						}
 					]
 				}
@@ -241,7 +241,7 @@
 					]
 				},
 				"url": {
-					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=",
+					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=5724160613416960",
 					"host": [
 						"uploadhandler-dot-polyshare-222618",
 						"appspot",
@@ -253,7 +253,7 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "5724160613416960"
 						}
 					]
 				}
@@ -276,7 +276,7 @@
 					]
 				},
 				"url": {
-					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=",
+					"raw": "uploadhandler-dot-polyshare-222618.appspot.com/service?userId=5742796208078848",
 					"host": [
 						"uploadhandler-dot-polyshare-222618",
 						"appspot",
@@ -288,7 +288,7 @@
 					"query": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "5742796208078848"
 						}
 					]
 				}
